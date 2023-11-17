@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title%} Parcial 3 APP {%endblock%}</title>
+</head>
+<body onload="checkToken()">
+    {%block content%}
+    {% endblock %}
+</body>
+<script>
+    function checkToken(){
+        const token = localStorage.getItem('token')
+        if(token){
+            fetch(`/login?token=${token}`)
+            .then( response => response.json())
+            .then(data =>{
+                console.log(data.message)
+                if(data.message!="valid token"){
+                    localStorage.removeItem('token')
+                    window.location.href='/login'
+                }
+            })
+            .catch(error=>{
+                window.location.href='/login'
+            })
+        }else{
+            window.location.href='/login'
+        }
+    }
+</script>
+</html>

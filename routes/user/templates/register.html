@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Registro de usuario</h1>
+    <form id="sign-form">
+
+        <label for="email">Email:</label>
+        <input type="text" id="email" name="email">
+        <br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password">
+        <br>
+        <button type="submit" id="sign-btn">Submit</button>
+    </form>
+
+    <script>
+        const signForm=document.querySelector('#sign-form');
+        const signButton=document.querySelector('#sign-btn');
+        signButton.addEventListener('click' ,(e)=>{
+            e.preventDefault();
+            const email = document.querySelector('#email').value;
+            const password=document.querySelector('#password').value;
+
+            fetch('/sign',{
+                method:'POST',
+                headers:{
+                    'Content-Type':'application/json'
+                },
+                body:JSON.stringify({
+                    'email':email,
+                    'password':password
+                })
+            })
+            .then(response => response.json())
+            .then(data=>{
+                window.location.href='/login'
+            })
+        })
+    </script>
+</body>
+</html>
